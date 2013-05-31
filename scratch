@@ -1,0 +1,12 @@
+(gcd 206 40)
+
+
+(gcd 206 40)
+(gcd 40 (modulo 206 40))
+(gcd 40 6)
+(gcd 6 (modulo 40 6))
+(gcd 6 4)
+(gcd 4 (modulo 6 4))
+(gcd 4 2)
+(gcd 2 (modulo 4 2))
+(gcd 2 0)

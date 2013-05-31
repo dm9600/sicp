@@ -1,0 +1,15 @@
+(define (iter-expt b n)
+  (define (is-even x) 
+    (cond ((= x 0) #t)
+          ((> (modulo x 2) 0) #f)
+          (else '#t)))
+
+  (define (iter a b n)
+    (cond ((> n 0) 
+           (cond ((is-even n)
+                  (iter a (* b b) (/ n 2)))
+                 (else (iter (* a b) b (- n 1)))))
+           (else (display a))))
+  (iter 1 b n))
+
+(iter-expt 1 1)

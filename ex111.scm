@@ -1,0 +1,12 @@
+(define (f n)
+	(define (iter n)
+		(+ (f (- n 1))
+			(* 2 (f (- n 2)))
+			(* 3 (f (- n 3)))
+		)
+	)
+	
+	(cond ((< n 3) n)
+		((>= n 3) (iter n))
+	)
+)

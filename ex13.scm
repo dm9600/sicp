@@ -1,0 +1,8 @@
+(define (sort a b c)
+  (cond ((or (>= a b c ) (>= b a c)) 
+         (+ (* a a) (* b b))))
+  (cond ((or (>= a c b ) (>= c a b)) 
+         (+ (* a a) (* c c))))
+  (cond ((or (>= c b a ) (>= b c a)) 
+         (+ (* b b) (* c c))))
+)
