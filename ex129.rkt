@@ -15,16 +15,36 @@
      dx))
 
 (define (integral2 f a b n)
+  ;Get the multiplier for each iteration
   (define (get-mult k)
     (cond ((= k 0) 1)
-          ((even? k) 4)
-          (else 2)))
+          ((even? k) 2)
+          (else 4)))
+
+  ;Get the value of h
   (define (h b a n)
     (/ (- b a) n))
-  (define (y f a b h k)
+
+  ;Get the value of y for k
+  (define (y f a b k n)
     (f (+ a (* k (h b a n)))))
-  (sum (* (get-mult k) (y f a b (h b a n))
+
+  ;starting from k = a
+  ;get mult * yk, and iterate
+  (define (iter f a b n k)
+    (cond ((< k n)
+           (+ 
+             (* 
+               (get-mult k)
+               (y f a b k n))
+             (iter f a b n (+ k 1))))
+          (else (* (get-mult k)
+                   (y f a b k n)))))
+  (iter f a b n 0))
+
+(integral2 cube 0 1 .01)
 
 
-(integral2 cube 0 1 100)
-(integral1 cube 0 1 100)
+
+
+
