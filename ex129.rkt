@@ -17,17 +17,16 @@
 (define (integral2 f a b n)
   ;Get the multiplier for each iteration
   (define (get-mult k)
-    (cond ((= k 0) 1)
+    (cond ((or (= k 0) (= k n)) 1)
           ((even? k) 2)
           (else 4)))
 
   ;Get the value of h
-  (define (h b a n)
-    (/ (- b a) n))
+  (define h (/ (- b a) n))
 
   ;Get the value of y for k
-  (define (y f a b k n)
-    (f (+ a (* k (h b a n)))))
+  (define (y k)
+    (f (+ a (* k h))))
 
   ;starting from k = a
   ;get mult * yk, and iterate
@@ -36,13 +35,26 @@
            (+ 
              (* 
                (get-mult k)
-               (y f a b k n))
+               (y k))
              (iter f a b n (+ k 1))))
           (else (* (get-mult k)
-                   (y f a b k n)))))
-  (iter f a b n 0))
+                   (y k)))))
+  (* (/ h 3) (iter f a b n 0)))
 
-(integral2 cube 0 1 .01)
+(define (simpson f a b n)
+  (define h (/ (- b a) n))
+  (define (inc x) (+ x 1))
+  (define (y k)
+    (f (+ a (* k h))))
+  (define (term k)
+    (* (cond ((odd? k) 4)
+             ((or (= k 0) (= k n)) 1)
+             ((even? k) 2))
+       (y k)))
+  (/ (* h (sum term 0 inc n)) 3))
+
+(integral2 cube 2 10 100)
+(simpson cube 2 10 100)
 
 
 
